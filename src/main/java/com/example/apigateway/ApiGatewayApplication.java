@@ -5,13 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.security.oauth2.gateway.TokenRelayGatewayFilterFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -27,9 +31,10 @@ public class ApiGatewayApplication {
 		SpringApplication.run(ApiGatewayApplication.class, args);
 	}
 	@Bean
-	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+	public RouteLocator customRouteLocator(RouteLocatorBuilder builder, TokenRelayGatewayFilterFactory filterFactory) {
 		return builder.routes()
 				.route("car-service", r -> r.path("/cars")
+						.filters(f -> f.filter(filterFactory.apply()))
 						.uri("lb://car-service"))
 				.build();
 				/*.route("car-service", r -> r.path("/cars")
@@ -63,9 +68,17 @@ class FaveCarsController {
 		this.carClient = carClient;
 	}
 
-	@GetMapping("/fave-cars")
+	@GetMapping("/old-fave-cars")
 	public Flux<Car> faveCars() {
 		return carClient.build().get().uri("lb://car-service/cars")
+				.retrieve().bodyToFlux(Car.class)
+				.filter(this::isFavorite);
+	}
+
+	@GetMapping("/fave-cars")
+	public Flux<Car> faveCars(@RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient authorizedClient) {
+		return carClient.build().get().uri("lb://car-service/cars")
+				.header("Authorization", "Bearer " + authorizedClient.getAccessToken().getTokenValue())
 				.retrieve().bodyToFlux(Car.class)
 				.filter(this::isFavorite);
 	}
