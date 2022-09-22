@@ -1,0 +1,25 @@
+server:
+  port: 8761
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: https://${EUREKA_USER}:${EUREKA_PASSWORD}@discovery-service.sonam.cloud:8761/eureka
+
+spring:
+  application:
+    name: gateway
+
+logging:
+  level:
+    root: error
+    me:
+      sonam: info
+
+okta:
+  oauth2:
+    issuer: https://dev-975443.okta.com/oauth2/default
+    client-secret: ${OKTA_CLIENT_SECRET}
+    client-id: 0oa971hyyjI3Dsk7d4x7

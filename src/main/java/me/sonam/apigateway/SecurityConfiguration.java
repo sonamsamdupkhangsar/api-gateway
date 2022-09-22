@@ -1,4 +1,4 @@
-package com.example.apigateway;
+package me.sonam.apigateway;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;

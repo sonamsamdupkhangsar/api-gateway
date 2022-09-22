@@ -1,5 +1,6 @@
-package com.example.apigateway;
+package me.sonam.apigateway;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +27,12 @@ public class ApiGatewayApplicationTests {
 
 	@MockBean
 	ReactiveJwtDecoder jwtDecoder;
+
+
+	@BeforeAll
+	static void loadProperty() {
+		System.setProperty("OKTA_CLIENT_SECRET", "test");
+	}
 
 	@Test
 	public void testCorsConfiguration() {
