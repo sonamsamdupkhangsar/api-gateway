@@ -6,7 +6,7 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: https://${EUREKA_USER}:${EUREKA_PASSWORD}@discovery-service.sonam.cloud:8761/eureka
+      defaultZone: https://${EUREKA_USER}:${EUREKA_PASSWORD}@discovery-service.sonam.cloud/eureka
 
 spring:
   application:
@@ -14,7 +14,7 @@ spring:
 
 logging:
   level:
-    root: error
+    root: debug
     me:
       sonam: info
 
