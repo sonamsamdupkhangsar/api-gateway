@@ -77,13 +77,13 @@ envs:
 health:
   liveness:
     path: /actuator/health
-    port: 8761
+    port: 8080
     initialDelaySeconds: 5
     periodSeconds: 5
     failureThreshold: 5
   readiness:
     path: /actuator/health
-    port: 8761
+    port: 8080
     initialDelaySeconds: 5
     periodSeconds: 5
     failureThreshold: 5

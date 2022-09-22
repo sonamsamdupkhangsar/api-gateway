@@ -10,6 +10,7 @@ import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
+import java.util.regex.Matcher;
 
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
@@ -19,13 +20,16 @@ public class SecurityConfiguration {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         // @formatter:off
         http
+
                 .authorizeExchange()
+                .pathMatchers("/actuator/*").permitAll()
                 .anyExchange().authenticated()
                 .and()
                 .oauth2Login()
                 .and()
                 .oauth2ResourceServer()
-                .jwt();
+                .jwt()
+                ;
         return http.build();
         // @formatter:on
     }
