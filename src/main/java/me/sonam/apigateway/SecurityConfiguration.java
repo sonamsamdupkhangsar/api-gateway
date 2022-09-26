@@ -28,8 +28,7 @@ public class SecurityConfiguration {
                 .oauth2Login()
                 .and()
                 .oauth2ResourceServer()
-                .jwt()
-                ;
+                .jwt();
         return http.build();
         // @formatter:on
     }

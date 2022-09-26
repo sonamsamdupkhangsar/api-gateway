@@ -1,0 +1,3 @@
+ export OKTA_CLIENT_SECRET=j_7cgvAuGd4i_nh2ITGerly49lvrK2H8_GwXKS5r;
+ export EUREKA_USER=admin;
+export EUREKA_PASSWORD=admin
