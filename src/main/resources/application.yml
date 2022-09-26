@@ -3,7 +3,8 @@ server:
 
 eureka:
   instance:
-    appName: api-gateway.sonam.cloud
+    statusPageUrlPath: https://api-gateway.sonam.cloud/actuator/info
+    healthCheckUrlPath: https://api-gateway.sonam.cloud/actuator/health
   client:
     serviceUrl:
       defaultZone: https://${EUREKA_USER}:${EUREKA_PASSWORD}@discovery-service.sonam.cloud/eureka
