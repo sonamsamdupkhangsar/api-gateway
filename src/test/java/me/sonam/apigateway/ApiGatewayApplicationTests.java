@@ -32,6 +32,8 @@ public class ApiGatewayApplicationTests {
 	@BeforeAll
 	static void loadProperty() {
 		System.setProperty("OKTA_CLIENT_SECRET", "test");
+		System.setProperty("EUREKA_USER", "test");
+		System.setProperty("EUREKA_PASSWORD", "test");
 	}
 
 	@Test
