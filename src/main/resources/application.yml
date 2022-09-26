@@ -2,6 +2,8 @@ server:
   port: 8080
 
 eureka:
+  instance:
+    appName: api-gateway.sonam.cloud
   client:
     serviceUrl:
       defaultZone: https://${EUREKA_USER}:${EUREKA_PASSWORD}@discovery-service.sonam.cloud/eureka
