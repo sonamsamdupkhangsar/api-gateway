@@ -22,7 +22,7 @@ public class SecurityConfiguration {
         http
 
                 .authorizeExchange()
-                .pathMatchers("/actuator/*").permitAll()
+                .pathMatchers("/actuator", "/actuator/*").permitAll()
                 .anyExchange().authenticated()
                 .and()
                 .oauth2Login()

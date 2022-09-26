@@ -3,7 +3,7 @@ server:
 
 eureka:
   instance:
-    statusPageUrlPath: https://api-gateway.sonam.cloud/actuator/info
+    statusPageUrlPath: https://api-gateway.sonam.cloud/actuator
     healthCheckUrlPath: https://api-gateway.sonam.cloud/actuator/health
   client:
     serviceUrl:
