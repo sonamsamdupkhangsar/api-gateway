@@ -11,7 +11,7 @@ eureka:
 
 spring:
   application:
-    name: gateway
+    name: api-gateway
 
 logging:
   level:
@@ -19,9 +19,18 @@ logging:
     me:
       sonam: info
 
-okta:
-  oauth2:
-    issuer: https://dev-975443.okta.com/oauth2/default
-    client-secret: ${OKTA_CLIENT_SECRET}
-    client-id: 0oa971hyyjI3Dsk7d4x7
+jwt-service:
+  root: ${JWT_REST_SERVICE}
+  public-key-id: /jwts/publickeys/{keyId}
+  accesstoken: /jwts/accesstoken
+
+permitpath:
+  - path: /actuator
+  - path: /actuator/health
+
+#okta:
+#  oauth2:
+#    issuer: https://dev-975443.okta.com/oauth2/default
+#    client-secret: ${OKTA_CLIENT_SECRET}
+#    client-id: 0oa971hyyjI3Dsk7d4x7
 
