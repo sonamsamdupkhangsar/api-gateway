@@ -1,9 +1,5 @@
 package me.sonam.apigateway;
 
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.RecordedRequest;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -40,7 +36,7 @@ public class ApiGatewayApplicationTests {
 	@MockBean
 	ReactiveJwtDecoder jwtDecoder;
 
-	private static MockWebServer mockWebServer;
+
 
 	@BeforeAll
 	static void loadProperty() throws IOException {
@@ -48,14 +44,9 @@ public class ApiGatewayApplicationTests {
 		System.setProperty("EUREKA_USER", "test");
 		System.setProperty("EUREKA_PASSWORD", "test");
 
-		mockWebServer = new MockWebServer();
-		mockWebServer.start();
+
 	}
-	@Before
-	public void setUp() {
-		LOG.info("setup mock");
-		MockitoAnnotations.openMocks(this);
-	}
+
 
 	@Test
 	public void testCorsConfiguration() {
