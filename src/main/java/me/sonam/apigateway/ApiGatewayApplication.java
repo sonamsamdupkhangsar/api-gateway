@@ -12,8 +12,8 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+//import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+//import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -23,7 +23,7 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 
 @EnableEurekaClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"me.sonam.security", "me.sonam.apigateway"})
 public class ApiGatewayApplication {
 	private static final Logger LOG = LoggerFactory.getLogger(ApiGatewayApplication.class);
 
@@ -34,11 +34,16 @@ public class ApiGatewayApplication {
 		SpringApplication.run(ApiGatewayApplication.class, args);
 	}
 	@Bean
-	public RouteLocator customRouteLocator(RouteLocatorBuilder builder, TokenRelayGatewayFilterFactory filterFactory) {
+	public RouteLocator customRouteLocator(RouteLocatorBuilder builder, JwtTokenFilter filterFactory) {//TokenRelayGatewayFilterFactory filterFactory) {
 		return builder.routes()
 				.route("car-service", r -> r.path("/cars")
-						.filters(f -> f.filter(filterFactory.apply()))
+						//.filters(f -> f.filter(filterFactory.apply()))
 						.uri("lb://car-service"))
+				//.build()
+				.route("user-service", r-> r.path("/users")
+						//.filters(f -> f.filter(filterFactory.apply()))
+						.filters(f -> f.filter(filterFactory.apply(new JwtTokenFilter.Config("My Cusom Message", true, true))))
+						.uri("lb://user-rest-service"))
 				.build();
 				/*.route("car-service", r -> r.path("/cars")
 						.filters(f -> f.hystrix(c -> c.setName("carsFallback")
@@ -83,13 +88,13 @@ class FaveCarsController {
 				.filter(this::isFavorite);
 	}
 
-	@GetMapping("/fave-cars")
+	/*@GetMapping("/fave-cars")
 	public Flux<Car> faveCars(@RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient authorizedClient) {
 		return carClient.build().get().uri("lb://car-service/cars")
 				.header("Authorization", "Bearer " + authorizedClient.getAccessToken().getTokenValue())
 				.retrieve().bodyToFlux(Car.class)
 				.filter(this::isFavorite);
-	}
+	}*/
 
 	private boolean isFavorite(Car car) {
 		return car.getName().equals("ID. BUZZ");
