@@ -7,7 +7,7 @@ eureka:
     healthCheckUrlPath: https://api-gateway.sonam.cloud/actuator/health
   client:
     serviceUrl:
-      defaultZone: https://${EUREKA_USER}:${EUREKA_PASSWORD}@discovery-service.sonam.cloud/eureka
+      defaultZone: ${DEFAULT_ZONE}
 
 spring:
   application:
