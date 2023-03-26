@@ -21,7 +21,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         // @formatter:off
-        http.csrf().disable().;
+        http.csrf().disable().authorizeExchange().anyExchange().permitAll();
         return http.build();
 /*
 
