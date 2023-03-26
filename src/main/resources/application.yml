@@ -29,6 +29,8 @@ permitpath:
   - path: /actuator/health
   - path: /users
     httpmethods: POST
+  - path: /api/health/*
+    httpMethods: GET
 #okta:
 #  oauth2:
 #    issuer: https://dev-975443.okta.com/oauth2/default
