@@ -43,10 +43,7 @@ public class ApiGatewayApplicationTests {
 		System.setProperty("OKTA_CLIENT_SECRET", "test");
 		System.setProperty("EUREKA_USER", "test");
 		System.setProperty("EUREKA_PASSWORD", "test");
-
-
 	}
-
 
 	@Test
 	public void testCorsConfiguration() {
@@ -61,7 +58,7 @@ public class ApiGatewayApplicationTests {
 	}
 
 	@Test
-	public void testCars() throws InterruptedException {
+	public void testUsersEndpoint() throws InterruptedException {
 		LOG.info("call users endpoint");
 
 		final String authMessage = "Authentication created successfully for authenticationId";

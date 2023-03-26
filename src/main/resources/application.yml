@@ -27,7 +27,8 @@ jwt-service:
 permitpath:
   - path: /actuator
   - path: /actuator/health
-
+  - path: /users
+    httpmethods: POST
 #okta:
 #  oauth2:
 #    issuer: https://dev-975443.okta.com/oauth2/default

@@ -23,7 +23,7 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 
 @EnableEurekaClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"me.sonam.security", "me.sonam.apigateway"})
 public class ApiGatewayApplication {
 	private static final Logger LOG = LoggerFactory.getLogger(ApiGatewayApplication.class);
 
