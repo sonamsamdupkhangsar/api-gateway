@@ -4,8 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+@Component
 public class JwtTokenFilter extends AbstractGatewayFilterFactory<JwtTokenFilter.Config> {
     private static final Logger LOG = LoggerFactory.getLogger(JwtTokenFilter.class);
 
@@ -37,6 +39,13 @@ public class JwtTokenFilter extends AbstractGatewayFilterFactory<JwtTokenFilter.
         public Config() {
 
         }
+
+        public Config(String baseMessage, boolean preLogger, boolean postLogger) {
+            this.baseMessage = baseMessage;
+            this.preLogger = preLogger;
+            this.postLogger = postLogger;
+        }
+
         public String getBaseMessage() {
             return this.baseMessage;
         }

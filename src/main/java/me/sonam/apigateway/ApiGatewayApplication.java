@@ -34,11 +34,16 @@ public class ApiGatewayApplication {
 		SpringApplication.run(ApiGatewayApplication.class, args);
 	}
 	@Bean
-	public RouteLocator customRouteLocator(RouteLocatorBuilder builder, TokenRelayGatewayFilterFactory filterFactory) {
+	public RouteLocator customRouteLocator(RouteLocatorBuilder builder, JwtTokenFilter filterFactory) {//TokenRelayGatewayFilterFactory filterFactory) {
 		return builder.routes()
 				.route("car-service", r -> r.path("/cars")
-						.filters(f -> f.filter(filterFactory.apply()))
+						//.filters(f -> f.filter(filterFactory.apply()))
 						.uri("lb://car-service"))
+				//.build()
+				.route("user-service", r-> r.path("/users")
+						//.filters(f -> f.filter(filterFactory.apply()))
+						.filters(f -> f.filter(filterFactory.apply(new JwtTokenFilter.Config("My Cusom Message", true, true))))
+						.uri("lb://user-rest-service"))
 				.build();
 				/*.route("car-service", r -> r.path("/cars")
 						.filters(f -> f.hystrix(c -> c.setName("carsFallback")
