@@ -44,6 +44,13 @@ public class ApiGatewayApplication {
 						//.filters(f -> f.filter(filterFactory.apply()))
 						.filters(f -> f.filter(filterFactory.apply(new JwtTokenFilter.Config("My Cusom Message", true, true))))
 						.uri("lb://user-rest-service"))
+				.route("user-service", r-> r.path("/users/api/health/*")
+						//.filters(f -> f.filter(filterFactory.apply()))
+						.filters(f -> f.filter(filterFactory.apply(new JwtTokenFilter.Config("My Cusom Message", true, true))))
+						.uri("lb://user-rest-service"))
+				.route("account-rest-service", r-> r.path("/accounts/**")
+						.filters(f -> f.filter(filterFactory.apply(new JwtTokenFilter.Config("My Cusom Message", true, true))))
+						.uri("lb://account-rest-service"))
 				.build();
 				/*.route("car-service", r -> r.path("/cars")
 						.filters(f -> f.hystrix(c -> c.setName("carsFallback")
@@ -75,18 +82,18 @@ class Car {
 @RestController
 class FaveCarsController {
 
-	private final WebClient.Builder carClient;
+	//private final WebClient.Builder carClient;
 
-	public FaveCarsController(WebClient.Builder carClient) {
+	/*public FaveCarsController(WebClient.Builder carClient) {
 		this.carClient = carClient;
-	}
+	}*/
 
-	@GetMapping("/old-fave-cars")
+	/*@GetMapping("/old-fave-cars")
 	public Flux<Car> faveCars() {
 		return carClient.build().get().uri("lb://car-service/cars")
 				.retrieve().bodyToFlux(Car.class)
 				.filter(this::isFavorite);
-	}
+	}*/
 
 	/*@GetMapping("/fave-cars")
 	public Flux<Car> faveCars(@RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient authorizedClient) {

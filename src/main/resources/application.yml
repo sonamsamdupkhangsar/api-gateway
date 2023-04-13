@@ -29,8 +29,28 @@ permitpath:
   - path: /actuator/health
   - path: /users
     httpmethods: POST
+  - path: /users/**
+    httpmethods: GET
   - path: /api/health/*
     httpMethods: GET
+  - path: /cars
+  - path: /cars/**
+  - path: /accounts/activate/*/*
+    httpMethods: GET
+  - path: /accounts/api/health/*
+  - path: /accounts/active/*/*
+    httpMethods: GET
+  - path: /accounts/emailactivationlink/*
+    httpMethods: PUT
+  - path: /accounts/emailmysecret/*
+    httpMethods: PUT
+  - path: /accounts/*/*
+    httpMethods: POST
+  - path: /accounts/email/authenticationId/*
+    httpMethods: PUT
+  - path: /accounts/validate/secret/*/*
+    httpMethods: PUT
+
 #okta:
 #  oauth2:
 #    issuer: https://dev-975443.okta.com/oauth2/default
