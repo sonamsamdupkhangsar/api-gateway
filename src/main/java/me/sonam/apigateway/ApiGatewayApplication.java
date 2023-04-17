@@ -1,26 +1,19 @@
 package me.sonam.apigateway;
 
-import lombok.Data;
+import me.sonam.security.jwt.PublicKeyJwtDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.gateway.filter.factory.TokenRelayGatewayFilterFactory;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
-//import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-//import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 
 @EnableEurekaClient
 @SpringBootApplication(scanBasePackages = {"me.sonam.security", "me.sonam.apigateway"})
@@ -49,7 +42,6 @@ public class ApiGatewayApplication {
 						.filters(f -> f.filter(filterFactory.apply(new JwtTokenFilter.Config("My Cusom Message", true, true))))
 						.uri("lb://user-rest-service"))
 				.route("account-rest-service", r-> r.path("/accounts/**")
-						.filters(f -> f.filter(filterFactory.apply(new JwtTokenFilter.Config("My Cusom Message", true, true))))
 						.uri("lb://account-rest-service"))
 				.build();
 				/*.route("car-service", r -> r.path("/cars")
@@ -70,17 +62,31 @@ public class ApiGatewayApplication {
 	public WebClient.Builder loadBalancedWebClientBuilder() {
 		return WebClient.builder();
 	}
+
+	@LoadBalanced
+	@Bean("noFilter")
+	public WebClient.Builder webClientBuilderNoFilter() {
+		LOG.info("returning for noFilter load balanced webclient part");
+		return WebClient.builder();
+	}
+
+	@Bean
+	public PublicKeyJwtDecoder publicKeyJwtDecoder() {
+		return new PublicKeyJwtDecoder(webClientBuilderNoFilter());
+	}
 }
 
+/*
 @Data
 class Car {
 	private String name;
 	private LocalDate releaseDate;
 
 }
+*/
 
-@RestController
-class FaveCarsController {
+//@RestController
+//class FaveCarsController {
 
 	//private final WebClient.Builder carClient;
 
@@ -103,11 +109,12 @@ class FaveCarsController {
 				.filter(this::isFavorite);
 	}*/
 
-	private boolean isFavorite(Car car) {
+	/*private boolean isFavorite(Car car) {
 		return car.getName().equals("ID. BUZZ");
-	}
-}
+	}*/
+//}
 
+/*
 @RestController
 class CarsFallback {
 	private static final Logger LOG = LoggerFactory.getLogger(CarsFallback.class);
@@ -117,4 +124,4 @@ class CarsFallback {
 		LOG.info("fallback no cars");
 		return Flux.empty();
 	}
-}
+}*/
