@@ -26,7 +26,7 @@ public class ApiGatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ApiGatewayApplication.class, args);
 	}
-	@Bean
+	/*@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder, JwtTokenFilter filterFactory) {//TokenRelayGatewayFilterFactory filterFactory) {
 		return builder.routes()
 				.route("car-service", r -> r.path("/cars")
@@ -34,23 +34,36 @@ public class ApiGatewayApplication {
 						.uri("lb://car-service"))
 				//.build()
 				.route("user-service", r-> r.path("/users")
-						//.filters(f -> f.filter(filterFactory.apply()))
 						.filters(f -> f.filter(filterFactory.apply(new JwtTokenFilter.Config("My Cusom Message", true, true))))
 						.uri("lb://user-rest-service"))
 				.route("user-service", r-> r.path("/users/api/health/*")
-						//.filters(f -> f.filter(filterFactory.apply()))
 						.filters(f -> f.filter(filterFactory.apply(new JwtTokenFilter.Config("My Cusom Message", true, true))))
 						.uri("lb://user-rest-service"))
+				.route("account-rest-service",
+						r-> r.path(
+ 								"/accounts/validate/secret/{authenticationId}/{secret}",
+								"/accounts/email/authenticationId/{email}",
+								"/accounts/emailmysecret/{authenticationId}",
+								"/accounts/emailactivationlink/{authenticationId}"
+								)
+						.uri("lb://account-rest-service"))
+				.route("account-rest-service",
+						r-> r.path(
+								"/authentications/password"  //password reset
+								)
+								.uri("lb://authentication-rest-service"))
+
+
 				.route("account-rest-service", r-> r.path("/accounts/**")
 						.uri("lb://account-rest-service"))
 				.build();
-				/*.route("car-service", r -> r.path("/cars")
+				*//*.route("car-service", r -> r.path("/cars")
 						.filters(f -> f.hystrix(c -> c.setName("carsFallback")
 								.setFallbackUri("forward:/cars-fallback")))
 						.uri("lb://car-service/cars"))
 						// need to define a hystrix bean which is not in GA release from Spring
-				.build();*/
-	}
+				.build();*//*
+	}*/
 
 	@PostConstruct
 	public void logHostUrl() {

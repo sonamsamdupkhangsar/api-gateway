@@ -9,13 +9,42 @@ eureka:
     serviceUrl:
       defaultZone: ${DEFAULT_ZONE}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 spring:
   application:
     name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: host_route
+          uri: http://example.org
+          predicates:
+            - Path=/foo/{segment}
+        - id: account-rest-service
+          uri: lb://account-rest-service
+          predicates:
+            - Path=/accounts/validate/secret/{authenticationId}/{secret},
+                    /accounts/email/authenticationId/{email},
+                    /accounts/emailmysecret/{authenticationId},
+                    /accounts/emailactivationlink/{authenticationId},
+                    /accounts/authentications/password,
+                    /accounts/activate/{authenticationId}/{secret}
+        - id: authentication-rest-service
+          uri: lb://authentication-rest-service
+          predicates:
+            - Path=/authentications/authenticate
+
 
 logging:
   level:
     root: info
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
     me:
       sonam: info
 
@@ -25,12 +54,11 @@ jwt-service:
   accesstoken: /jwts/accesstoken
 
 permitpath:
-  - path: /actuator
   - path: /actuator/health
   - path: /users
-    httpmethods: POST
+    httpMethods: POST
   - path: /users/**
-    httpmethods: GET
+    httpMethods: GET
   - path: /api/health/*
     httpMethods: GET
   - path: /cars
@@ -44,12 +72,20 @@ permitpath:
     httpMethods: PUT
   - path: /accounts/emailmysecret/*
     httpMethods: PUT
-  - path: /accounts/*/*
-    httpMethods: POST
+#  - path: /accounts/*/*
+#    httpMethods: POST
   - path: /accounts/email/authenticationId/*
     httpMethods: PUT
   - path: /accounts/validate/secret/*/*
     httpMethods: PUT
+  - path: /authentications/authenticate
+    httpMethods: POST
+  - path: /actuator/gateway/routes/account-rest-service
+    httpMethods: GET
+  - path: /actuator/gateway/routes/authentication-rest-service
+    httpMethods: GET
+  - path: /actuator/gateway/routes/host_route
+
 
 #okta:
 #  oauth2:
