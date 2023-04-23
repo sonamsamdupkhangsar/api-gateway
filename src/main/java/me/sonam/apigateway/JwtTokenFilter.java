@@ -20,12 +20,14 @@ public class JwtTokenFilter extends AbstractGatewayFilterFactory<JwtTokenFilter.
         return ((exchange, chain) -> {
             // Pre-processing
             if (config.isPreLogger()) {
+                LOG.info("response headers {}",  exchange.getResponse().getHeaders());
                 LOG.info("Pre GatewayFilter logging: {}", config.getBaseMessage());
             }
             return chain.filter(exchange)
                     .then(Mono.fromRunnable(() -> {
                         // Post-processing
                 if (config.isPostLogger()) {
+                    LOG.info("response headers {}",  exchange.getResponse().getHeaders());
                     LOG.info("Post GatewayFilter logging: {}", config.getBaseMessage());
                 }
             }));

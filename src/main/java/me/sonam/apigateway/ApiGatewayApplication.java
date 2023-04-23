@@ -1,26 +1,19 @@
 package me.sonam.apigateway;
 
-import lombok.Data;
+import me.sonam.security.jwt.PublicKeyJwtDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.gateway.filter.factory.TokenRelayGatewayFilterFactory;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
-//import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-//import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 
 @EnableEurekaClient
 @SpringBootApplication(scanBasePackages = {"me.sonam.security", "me.sonam.apigateway"})
@@ -33,7 +26,7 @@ public class ApiGatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ApiGatewayApplication.class, args);
 	}
-	@Bean
+	/*@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder, JwtTokenFilter filterFactory) {//TokenRelayGatewayFilterFactory filterFactory) {
 		return builder.routes()
 				.route("car-service", r -> r.path("/cars")
@@ -41,17 +34,36 @@ public class ApiGatewayApplication {
 						.uri("lb://car-service"))
 				//.build()
 				.route("user-service", r-> r.path("/users")
-						//.filters(f -> f.filter(filterFactory.apply()))
 						.filters(f -> f.filter(filterFactory.apply(new JwtTokenFilter.Config("My Cusom Message", true, true))))
 						.uri("lb://user-rest-service"))
+				.route("user-service", r-> r.path("/users/api/health/*")
+						.filters(f -> f.filter(filterFactory.apply(new JwtTokenFilter.Config("My Cusom Message", true, true))))
+						.uri("lb://user-rest-service"))
+				.route("account-rest-service",
+						r-> r.path(
+ 								"/accounts/validate/secret/{authenticationId}/{secret}",
+								"/accounts/email/authenticationId/{email}",
+								"/accounts/emailmysecret/{authenticationId}",
+								"/accounts/emailactivationlink/{authenticationId}"
+								)
+						.uri("lb://account-rest-service"))
+				.route("account-rest-service",
+						r-> r.path(
+								"/authentications/password"  //password reset
+								)
+								.uri("lb://authentication-rest-service"))
+
+
+				.route("account-rest-service", r-> r.path("/accounts/**")
+						.uri("lb://account-rest-service"))
 				.build();
-				/*.route("car-service", r -> r.path("/cars")
+				*//*.route("car-service", r -> r.path("/cars")
 						.filters(f -> f.hystrix(c -> c.setName("carsFallback")
 								.setFallbackUri("forward:/cars-fallback")))
 						.uri("lb://car-service/cars"))
 						// need to define a hystrix bean which is not in GA release from Spring
-				.build();*/
-	}
+				.build();*//*
+	}*/
 
 	@PostConstruct
 	public void logHostUrl() {
@@ -63,30 +75,44 @@ public class ApiGatewayApplication {
 	public WebClient.Builder loadBalancedWebClientBuilder() {
 		return WebClient.builder();
 	}
+
+	@LoadBalanced
+	@Bean("noFilter")
+	public WebClient.Builder webClientBuilderNoFilter() {
+		LOG.info("returning for noFilter load balanced webclient part");
+		return WebClient.builder();
+	}
+
+	@Bean
+	public PublicKeyJwtDecoder publicKeyJwtDecoder() {
+		return new PublicKeyJwtDecoder(webClientBuilderNoFilter());
+	}
 }
 
+/*
 @Data
 class Car {
 	private String name;
 	private LocalDate releaseDate;
 
 }
+*/
 
-@RestController
-class FaveCarsController {
+//@RestController
+//class FaveCarsController {
 
-	private final WebClient.Builder carClient;
+	//private final WebClient.Builder carClient;
 
-	public FaveCarsController(WebClient.Builder carClient) {
+	/*public FaveCarsController(WebClient.Builder carClient) {
 		this.carClient = carClient;
-	}
+	}*/
 
-	@GetMapping("/old-fave-cars")
+	/*@GetMapping("/old-fave-cars")
 	public Flux<Car> faveCars() {
 		return carClient.build().get().uri("lb://car-service/cars")
 				.retrieve().bodyToFlux(Car.class)
 				.filter(this::isFavorite);
-	}
+	}*/
 
 	/*@GetMapping("/fave-cars")
 	public Flux<Car> faveCars(@RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient authorizedClient) {
@@ -96,11 +122,12 @@ class FaveCarsController {
 				.filter(this::isFavorite);
 	}*/
 
-	private boolean isFavorite(Car car) {
+	/*private boolean isFavorite(Car car) {
 		return car.getName().equals("ID. BUZZ");
-	}
-}
+	}*/
+//}
 
+/*
 @RestController
 class CarsFallback {
 	private static final Logger LOG = LoggerFactory.getLogger(CarsFallback.class);
@@ -110,4 +137,4 @@ class CarsFallback {
 		LOG.info("fallback no cars");
 		return Flux.empty();
 	}
-}
+}*/
