@@ -1,21 +1,16 @@
 package me.sonam.apigateway;
 
-import me.sonam.security.jwt.PublicKeyJwtDecoder;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.gateway.route.RouteLocator;
-import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import javax.annotation.PostConstruct;
 
-@EnableEurekaClient
 @SpringBootApplication(scanBasePackages = {"me.sonam.security", "me.sonam.apigateway"})
 public class ApiGatewayApplication {
 	private static final Logger LOG = LoggerFactory.getLogger(ApiGatewayApplication.class);
@@ -81,11 +76,6 @@ public class ApiGatewayApplication {
 	public WebClient.Builder webClientBuilderNoFilter() {
 		LOG.info("returning for noFilter load balanced webclient part");
 		return WebClient.builder();
-	}
-
-	@Bean
-	public PublicKeyJwtDecoder publicKeyJwtDecoder() {
-		return new PublicKeyJwtDecoder(webClientBuilderNoFilter());
 	}
 }
 

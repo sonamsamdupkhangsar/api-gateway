@@ -38,22 +38,23 @@ spring:
           uri: lb://authentication-rest-service
           predicates:
             - Path=/authentications/authenticate
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9001
 
 
 logging:
   level:
-    root: info
+    root: debug
     org.springframework.cloud.gateway: DEBUG
     reactor.netty.http.client: DEBUG
     me:
       sonam: info
 
-jwt-service:
-  root: ${JWT_REST_SERVICE}
-  public-key-id: /jwts/publickeys/{keyId}
-  accesstoken: /jwts/accesstoken
-
 permitpath:
+  - path: /
   - path: /actuator/health
   - path: /users
     httpMethods: POST
