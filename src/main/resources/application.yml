@@ -115,3 +115,7 @@ permitpath:
     httpMethods: GET
   - path: /oauth2-token-mediator/token
     httpMethods: POST
+
+token:
+  audiences: ${OAUTH_CLIENTS}
+  issuerUri: ${ISSUER_URL}

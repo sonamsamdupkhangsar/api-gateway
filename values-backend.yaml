@@ -76,10 +76,10 @@ envs:
     value: discovery-service.sonam.cloud
   - name: DEFAULT_ZONE
     value: https://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
-  - name: JWT_REST_SERVICE
-    value: http://jwt-rest-service-mychart.backend.svc.cluster.local:80
   - name: ISSUER_URL
     value: http://authorization-server
+  - name: OAUTH_CLIENTS
+    value: oauth-client, nextjs-client
 
 health:
   liveness:

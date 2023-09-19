@@ -12,3 +12,4 @@ DEFAULT_ZONE: http://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
 #ISSUER_URL:  http://10.0.0.28:9001
 #ISSUER_URL: http://authorization-server:9001
 ISSUER_URL: http://my-server:9001
+OAUTH_CLIENTS: oauth-client
