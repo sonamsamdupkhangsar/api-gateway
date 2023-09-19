@@ -78,6 +78,8 @@ envs:
     value: https://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
   - name: JWT_REST_SERVICE
     value: http://jwt-rest-service-mychart.backend.svc.cluster.local:80
+  - name: ISSUER_URL
+    value: http://authorization-server
 
 health:
   liveness:
