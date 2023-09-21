@@ -51,8 +51,8 @@ spring:
           predicates:
 #            - Path=/issuer/oauth2/token
             - Path=/issuer/**
-          filters:
-            - RewritePath=/issuer/(?<segment>.*), /$\{segment}
+          #filters:
+          #  - RewritePath=/issuer/(?<segment>.*), /$\{segment}
         - id: oauth2-token-mediator
           uri: lb://oauth2-token-mediator
           predicates:
@@ -63,7 +63,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${ISSUER_URL}
+          issuer-uri: http://api-gateway:9001/issuer
 
 
 logging:
@@ -118,4 +118,4 @@ permitpath:
 
 token:
   audiences: ${OAUTH_CLIENTS}
-  issuerUri: ${ISSUER_URL}
+  issuerUri: http://api-gateway:9001/issuer #${ISSUER_URL}
