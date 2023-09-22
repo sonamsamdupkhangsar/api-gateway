@@ -18,7 +18,7 @@ DEFAULT_ZONE: http://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
 
 #ISSUER_ENDPOINT: http://api-gateway:9001/issuer   #this is for the jwt-decoder in token-filter
 
-ISSUER_URL: http://api-gateway:9001/issuer
+ISSUER_URL: http://api-gateway:9001/issuer  #9001 port is for authoriation-server locally
 
 OAUTH_CLIENTS: oauth-client
 
