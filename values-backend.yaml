@@ -77,7 +77,7 @@ envs:
   - name: DEFAULT_ZONE
     value: https://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
   - name: ISSUER_URL
-    value: http://authorization-server
+    value: http://api-gateway.sonam.cloud/issuer
   - name: OAUTH_CLIENTS
     value: oauth-client, nextjs-client
 

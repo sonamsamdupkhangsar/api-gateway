@@ -63,7 +63,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://api-gateway:9001/issuer
+          issuer-uri: ${ISSUER_URL} #http://api-gateway/issuer
 
 
 logging:
@@ -118,4 +118,4 @@ permitpath:
 
 token:
   audiences: ${OAUTH_CLIENTS}
-  issuerUri: http://api-gateway:9001/issuer #${ISSUER_URL}
+  issuerUri: ${ISSUER_URL} #http://api-gateway/issuer #this is used for accessing the issuer for jwt validation
