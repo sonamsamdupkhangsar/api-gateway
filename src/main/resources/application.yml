@@ -59,11 +59,11 @@ spring:
             - Path=/oauth2-token-mediator/authorize,
                     /oauth2-token-mediator/token
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${ISSUER_URL} #http://api-gateway/issuer
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: ${ISSUER_URL} #http://api-gateway/issuer
 
 
 logging:
