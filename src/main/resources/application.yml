@@ -39,7 +39,7 @@ spring:
           predicates:
             - Path=/authentications/authenticate
         - id: user-rest-service
-          uri: lb://user-rest-service
+          uri: lb://user-rest-service:8080
           predicates:
             - Path=/users
         - id: email-rest-service
