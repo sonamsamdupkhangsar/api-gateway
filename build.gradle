@@ -38,9 +38,9 @@ dependencies {
     implementation'org.springframework.boot:spring-boot-starter-webflux'
     implementation'org.springframework.cloud:spring-cloud-starter-gateway'//:3.1.4
     implementation'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-    implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-all:3.0.3'
+    //implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-client-all:3.0.3'
     implementation 'me.sonam:token-filter:1.0.0-SNAPSHOT'
-    implementation 'org.springframework.cloud:spring-cloud-kubernetes-dependencies:3.0.3'
+    //implementation 'org.springframework.cloud:spring-cloud-kubernetes-dependencies:3.0.3'
     implementation'com.github.ben-manes.caffeine:caffeine:3.1.6'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
