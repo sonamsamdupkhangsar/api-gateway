@@ -10,7 +10,7 @@ image:
 imagePullSecrets:
   - name: github-regcred
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "api-gateway"
 
 serviceAccount:
   # Specifies whether a service account should be created
