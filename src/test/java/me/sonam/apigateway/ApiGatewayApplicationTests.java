@@ -36,8 +36,6 @@ public class ApiGatewayApplicationTests {
 	@MockBean
 	ReactiveJwtDecoder jwtDecoder;
 
-
-
 	@BeforeAll
 	static void loadProperty() throws IOException {
 		System.setProperty("OKTA_CLIENT_SECRET", "test");

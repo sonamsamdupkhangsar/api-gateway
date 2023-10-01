@@ -14,7 +14,7 @@ public class CorsConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://localhost:8061", "https://swaggerui.sonam.cloud"));
+        corsConfig.setAllowedOrigins(Arrays.asList("*"));
         corsConfig.setMaxAge(8000L);
         corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");

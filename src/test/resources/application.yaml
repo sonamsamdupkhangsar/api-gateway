@@ -8,4 +8,4 @@ eureka:
 
 DEFAULT_ZONE: http://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
 
-JWT_REST_SERVICE: http://localhost:8081
+ISSUER_URL: http://authorization-server:9001

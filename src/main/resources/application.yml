@@ -38,6 +38,32 @@ spring:
           uri: lb://authentication-rest-service
           predicates:
             - Path=/authentications/authenticate
+        - id: user-rest-service
+          uri: lb://user-rest-service:8080
+          predicates:
+            - Path=/users
+        - id: email-rest-service
+          uri: lb://email-rest-service
+          predicates:
+            - Path=/emails
+        - id: authorization-server
+          uri: lb://authorization-server
+          predicates:
+#            - Path=/issuer/oauth2/token
+            - Path=/issuer/**
+          #filters:
+          #  - RewritePath=/issuer/(?<segment>.*), /$\{segment}
+        - id: oauth2-token-mediator
+          uri: lb://oauth2-token-mediator
+          predicates:
+            - Path=/oauth2-token-mediator/authorize,
+                    /oauth2-token-mediator/token
+
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: ${ISSUER_URL} #http://api-gateway/issuer
 
 
 logging:
@@ -48,12 +74,8 @@ logging:
     me:
       sonam: info
 
-jwt-service:
-  root: ${JWT_REST_SERVICE}
-  public-key-id: /jwts/publickeys/{keyId}
-  accesstoken: /jwts/accesstoken
-
 permitpath:
+  - path: /
   - path: /actuator/health
   - path: /users
     httpMethods: POST
@@ -85,11 +107,15 @@ permitpath:
   - path: /actuator/gateway/routes/authentication-rest-service
     httpMethods: GET
   - path: /actuator/gateway/routes/host_route
+  - path: /issuer/oauth2/token
+    httpMethods: POST
+  - path: /issuer/.well-known/openid-configuration
+    httpMethods: GET
+  - path: /oauth2-token-mediator/authorize
+    httpMethods: GET
+  - path: /oauth2-token-mediator/token
+    httpMethods: POST
 
-
-#okta:
-#  oauth2:
-#    issuer: https://dev-975443.okta.com/oauth2/default
-#    client-secret: ${OKTA_CLIENT_SECRET}
-#    client-id: 0oa971hyyjI3Dsk7d4x7
-
+token:
+  audiences: ${OAUTH_CLIENTS}
+  issuerUri: ${ISSUER_URL} #http://api-gateway/issuer #this is used for accessing the issuer for jwt validation

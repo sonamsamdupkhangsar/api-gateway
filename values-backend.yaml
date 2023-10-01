@@ -76,22 +76,24 @@ envs:
     value: discovery-service.sonam.cloud
   - name: DEFAULT_ZONE
     value: https://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
-  - name: JWT_REST_SERVICE
-    value: http://jwt-rest-service-mychart.backend.svc.cluster.local:80
+  - name: ISSUER_URL
+    value: https://authorization.sonam.cloud/issuer
+  - name: OAUTH_CLIENTS
+    value: oauth-client, nextjs-client
 
 health:
   liveness:
     path: /actuator/health
     port: 8080
-    initialDelaySeconds: 5
-    periodSeconds: 5
-    failureThreshold: 5
+    initialDelaySeconds: 0
+    periodSeconds: 0
+    failureThreshold: 0
   readiness:
     path: /actuator/health
     port: 8080
-    initialDelaySeconds: 5
-    periodSeconds: 5
-    failureThreshold: 5
+    initialDelaySeconds: 0
+    periodSeconds: 0
+    failureThreshold: 0
 
 secretFiles:
   - file: eureka-discovery

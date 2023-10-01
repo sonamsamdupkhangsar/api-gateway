@@ -8,4 +8,7 @@ eureka:
 
 DEFAULT_ZONE: http://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
 
-JWT_REST_SERVICE: http://localhost:8081
+ISSUER_URL: http://api-gateway:9001/issuer  #9001 port is for authoriation-server locally
+
+OAUTH_CLIENTS: oauth-client
+
