@@ -4,7 +4,6 @@ import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -21,8 +20,6 @@ public class ApiGatewayApplication {
 
 	@Autowired
 	private DiscoveryClient discoveryClient;
-	@Value("${eureka.client.serviceUrl.defaultZone}")
-	private String hostUrl;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiGatewayApplication.class, args);
@@ -30,7 +27,6 @@ public class ApiGatewayApplication {
 
 	@PostConstruct
 	public void logHostUrl() {
-		LOG.info("hostUrl: {}", hostUrl);
 		List<String> serviceList = discoveryClient.getServices();
 		LOG.info("printing services of size: {}", serviceList.size());
 
@@ -51,53 +47,3 @@ public class ApiGatewayApplication {
 		return WebClient.builder();
 	}
 }
-
-/*
-@Data
-class Car {
-	private String name;
-	private LocalDate releaseDate;
-
-}
-*/
-
-//@RestController
-//class FaveCarsController {
-
-	//private final WebClient.Builder carClient;
-
-	/*public FaveCarsController(WebClient.Builder carClient) {
-		this.carClient = carClient;
-	}*/
-
-	/*@GetMapping("/old-fave-cars")
-	public Flux<Car> faveCars() {
-		return carClient.build().get().uri("lb://car-service/cars")
-				.retrieve().bodyToFlux(Car.class)
-				.filter(this::isFavorite);
-	}*/
-
-	/*@GetMapping("/fave-cars")
-	public Flux<Car> faveCars(@RegisteredOAuth2AuthorizedClient("okta") OAuth2AuthorizedClient authorizedClient) {
-		return carClient.build().get().uri("lb://car-service/cars")
-				.header("Authorization", "Bearer " + authorizedClient.getAccessToken().getTokenValue())
-				.retrieve().bodyToFlux(Car.class)
-				.filter(this::isFavorite);
-	}*/
-
-	/*private boolean isFavorite(Car car) {
-		return car.getName().equals("ID. BUZZ");
-	}*/
-//}
-
-/*
-@RestController
-class CarsFallback {
-	private static final Logger LOG = LoggerFactory.getLogger(CarsFallback.class);
-
-	@GetMapping("/cars-fallback")
-	public Flux<Car> noCars() {
-		LOG.info("fallback no cars");
-		return Flux.empty();
-	}
-}*/

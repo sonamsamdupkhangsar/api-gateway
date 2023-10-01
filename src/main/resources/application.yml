@@ -1,14 +1,6 @@
 server:
   port: 8080
 
-eureka:
-  instance:
-    statusPageUrlPath: https://api-gateway.sonam.cloud/actuator
-    healthCheckUrlPath: https://api-gateway.sonam.cloud/actuator/health
-  client:
-    serviceUrl:
-      defaultZone: ${DEFAULT_ZONE}
-
 management:
   endpoints:
     web:
@@ -39,7 +31,7 @@ spring:
           predicates:
             - Path=/authentications/authenticate
         - id: user-rest-service
-          uri: lb://user-rest-service-mychart
+          uri: lb://user-rest-service
           predicates:
             - Path=/users
         - id: email-rest-service

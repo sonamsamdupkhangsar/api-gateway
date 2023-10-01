@@ -81,12 +81,12 @@ health:
   liveness:
     path: /actuator/health
     port: 8080
-    initialDelaySeconds: 0
-    periodSeconds: 0
-    failureThreshold: 0
+    initialDelaySeconds: 10
+    periodSeconds: 2
+    failureThreshold: 2
   readiness:
     path: /actuator/health
     port: 8080
-    initialDelaySeconds: 0
-    periodSeconds: 0
-    failureThreshold: 0
+    initialDelaySeconds: 10
+    periodSeconds: 2
+    failureThreshold: 2
