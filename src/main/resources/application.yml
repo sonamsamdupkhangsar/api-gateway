@@ -59,13 +59,6 @@ spring:
             - Path=/oauth2-token-mediator/authorize,
                     /oauth2-token-mediator/token
 
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: ${ISSUER_URL} #http://api-gateway/issuer
-
-
 logging:
   level:
     root: info
@@ -118,4 +111,4 @@ permitpath:
 
 token:
   audiences: ${OAUTH_CLIENTS}
-  issuerUri: ${ISSUER_URL} #http://api-gateway/issuer #this is used for accessing the issuer for jwt validation
+  issuerUri: ${ISSUER_URL}

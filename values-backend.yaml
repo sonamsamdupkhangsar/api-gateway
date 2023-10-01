@@ -72,10 +72,6 @@ tolerations: []
 affinity: {}
 
 envs:
-  - name: EUREKA_HOST
-    value: discovery-service.sonam.cloud
-  - name: DEFAULT_ZONE
-    value: https://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
   - name: ISSUER_URL
     value: https://authorization.sonam.cloud/issuer
   - name: OAUTH_CLIENTS
@@ -94,11 +90,3 @@ health:
     initialDelaySeconds: 0
     periodSeconds: 0
     failureThreshold: 0
-
-secretFiles:
-  - file: eureka-discovery
-    keys:
-      - key: user
-        name: EUREKA_USER
-      - key: password
-        name: EUREKA_PASSWORD
