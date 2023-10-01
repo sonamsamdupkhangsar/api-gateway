@@ -35,6 +35,7 @@ public class ApiGatewayApplication {
 		LOG.info("printing services of size: {}", serviceList.size());
 
 		serviceList.forEach(s -> LOG.info("Found service: {}", s));
+
 	}
 
 	@Bean
