@@ -1,14 +1,6 @@
 server:
   port: 8080
 
-eureka:
-  instance:
-    statusPageUrlPath: https://api-gateway.sonam.cloud/actuator
-    healthCheckUrlPath: https://api-gateway.sonam.cloud/actuator/health
-  client:
-    serviceUrl:
-      defaultZone: ${DEFAULT_ZONE}
-
 management:
   endpoints:
     web:
@@ -39,7 +31,7 @@ spring:
           predicates:
             - Path=/authentications/authenticate
         - id: user-rest-service
-          uri: lb://user-rest-service:8080
+          uri: lb://user-rest-service
           predicates:
             - Path=/users
         - id: email-rest-service
@@ -58,13 +50,6 @@ spring:
           predicates:
             - Path=/oauth2-token-mediator/authorize,
                     /oauth2-token-mediator/token
-
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: ${ISSUER_URL} #http://api-gateway/issuer
-
 
 logging:
   level:
@@ -118,4 +103,4 @@ permitpath:
 
 token:
   audiences: ${OAUTH_CLIENTS}
-  issuerUri: ${ISSUER_URL} #http://api-gateway/issuer #this is used for accessing the issuer for jwt validation
+  issuerUri: ${ISSUER_URL}
