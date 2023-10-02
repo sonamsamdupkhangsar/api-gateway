@@ -77,16 +77,3 @@ envs:
   - name: OAUTH_CLIENTS
     value: oauth-client, nextjs-client
 
-health:
-  liveness:
-    path: /actuator/health
-    port: 8080
-    initialDelaySeconds: 10
-    periodSeconds: 2
-    failureThreshold: 2
-  readiness:
-    path: /actuator/health
-    port: 8080
-    initialDelaySeconds: 10
-    periodSeconds: 2
-    failureThreshold: 2
