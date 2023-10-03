@@ -33,7 +33,7 @@ spring:
         - id: user-rest-service
           uri: lb://user-rest-service
           predicates:
-            - Path=/users
+            - Path=/users, /users/{authenticationId}, /users/names/{firstName}/{lastName}
         - id: email-rest-service
           uri: lb://email-rest-service
           predicates:
