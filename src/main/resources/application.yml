@@ -59,6 +59,17 @@ spring:
                   /organizations/{organizationId}/users,
                   /organizations/{organizationId}/positions,
                   /organizations/{organizationId}/positions/{id},
+        - id: role-rest-service
+          uri: lb://role-rest-service
+          predicates:
+            - Path=/roles,
+                  /roles/{id},
+                  /roles/user,
+                  /roles/organization/{organizationId},
+                  /roles/clientId/{clientId}/users,
+                  /roles/clientId/{clientId}/users/{userId},
+                  /roles/{roleId}/users/{userId}
+
 
 
 logging:
