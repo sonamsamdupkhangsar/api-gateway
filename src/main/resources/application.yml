@@ -48,7 +48,7 @@ spring:
         - id: oauth2-token-mediator
           uri: lb://oauth2-token-mediator
           predicates:
-            - Path=/oauth2-token-mediator/authorize,
+            - Path=/oauth2-token-mediator/authorize/*,
                     /oauth2-token-mediator/token
         - id: organization-rest-service
           uri: lb://organization-rest-service
