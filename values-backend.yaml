@@ -76,4 +76,7 @@ envs:
     value: https://authorization.sonam.cloud/issuer
   - name: OAUTH_CLIENTS
     value: oauth-client, nextjs-client
-
+  - name: ALLOWED_ORIGINS
+    value: *
+  - name: ORIGIN_VALUE
+    value: https://api-gateway.sonam.cloud

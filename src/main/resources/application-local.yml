@@ -17,3 +17,6 @@ eureka:
     enabled: true
     serviceUrl:
       defaultZone: ${DEFAULT_ZONE}
+
+allowedOrigins: api-gateway, *, 127.0.0.1, 10.0.0.28
+originValue: http://api-gateway

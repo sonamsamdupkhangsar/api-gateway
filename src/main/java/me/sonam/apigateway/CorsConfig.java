@@ -16,11 +16,19 @@ import java.util.List;
 public class CorsConfig {
     private static final Logger LOG = LoggerFactory.getLogger(CorsConfig.class);
 
+    @Value("${allowedOrigins}")
+    private String allowedOrigins; //csv allow origins
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
 
-        corsConfig.setAllowedOrigins(Arrays.asList("api-gateway", "*", "api-gateway:8080", "127.0.0.1", "10.0.0.28", "10.0.0.28:8080"));
+        allowedOrigins = allowedOrigins.replace(" ", ""); //remove all whitespace
+        List<String> list = Arrays.asList(allowedOrigins.split(","));
+        LOG.info("adding allowedOrigins: {}", list);
+
+
+        corsConfig.setAllowedOrigins(list);
         corsConfig.setMaxAge(8000L);
         corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");
