@@ -20,7 +20,7 @@ public class CorsConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
 
-        corsConfig.setAllowedOrigins(Arrays.asList("api-gateway", "null", "*", "api-gateway:8080", "127.0.0.1", "10.0.0.28", "10.0.0.28:8080"));
+        corsConfig.setAllowedOrigins(Arrays.asList("api-gateway", "*", "api-gateway:8080", "127.0.0.1", "10.0.0.28", "10.0.0.28:8080"));
         corsConfig.setMaxAge(8000L);
         corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");
