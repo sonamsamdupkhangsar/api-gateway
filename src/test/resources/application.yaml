@@ -9,3 +9,5 @@ eureka:
 DEFAULT_ZONE: http://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
 
 ISSUER_URL: http://authorization-server:9001
+allowedOrigins: api-gateway, *, 127.0.0.1, 10.0.0.28
+originValue: http://api-gateway
