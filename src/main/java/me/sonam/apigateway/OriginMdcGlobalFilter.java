@@ -69,7 +69,7 @@ public class OriginMdcGlobalFilter implements GlobalFilter {
                     query = "";
                 }
                 LOG.info("redirectin path: {}, rawPath: {}, query: {}", path, rawPath, query);
-                exchange1.getResponse().getHeaders().setLocation(URI.create("http://api-gateway:8080" + path+"?"+query));
+                exchange1.getResponse().getHeaders().setLocation(URI.create(originValue + path+"?"+query));
             }
         })).then(Mono.fromRunnable(() -> {
             LOG.info("after adding MDC remove MDC requestId from log");
