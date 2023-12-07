@@ -12,4 +12,4 @@ eureka:
       enabled: false
 
 allowedOrigins: ${ALLOWED_ORIGINS}
-originValue: ${ORIGIN_VALUE} //subdomain with domain name such as https://api-gateway.sonam.cloud
+originValue: ${ORIGIN_VALUE} #subdomain with domain name such as https://api-gateway.sonam.cloud
