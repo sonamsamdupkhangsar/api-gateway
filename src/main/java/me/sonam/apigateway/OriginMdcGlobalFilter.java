@@ -13,6 +13,8 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.UUID;
 
 import static org.springframework.http.HttpHeaders.ORIGIN;
@@ -68,6 +70,11 @@ public class OriginMdcGlobalFilter implements GlobalFilter {
                 if (query == null) {
                     query = "";
                 }
+                else {
+                    LOG.info("url encode: {}", query);
+                    query = URLEncoder.encode(query, Charset.defaultCharset());
+                }
+
                 LOG.info("redirectin path: {}, rawPath: {}, query: {}", path, rawPath, query);
                 exchange1.getResponse().getHeaders().setLocation(URI.create(originValue + path+"?"+query));
             }
