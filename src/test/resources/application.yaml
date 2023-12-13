@@ -18,3 +18,4 @@ DEFAULT_ZONE: http://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
 ALLOWED_ORIGINS: api-gateway, *, 127.0.0.1, 10.0.0.28, http://example.com
 ORIGIN_VALUE: http://api-gateway
 ISSUER_URI: http://api-gateway:9001
+AUTHORIZATION_SERVER: api-gateway:9001

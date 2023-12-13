@@ -141,3 +141,4 @@ permitpath:
 
 allowedOrigins: ${ALLOWED_ORIGINS}
 originValue: ${ORIGIN_VALUE}
+authorizationServer: ${AUTHORIZATION_SERVER}
