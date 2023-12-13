@@ -72,8 +72,12 @@ spring:
                   /roles/clientId/{clientId}/users,
                   /roles/clientId/{clientId}/users/{userId},
                   /roles/{roleId}/users/{userId}
-
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI}
+          audiences: ${OAUTH_AUDIENCES}
 
 logging:
   level:
@@ -135,6 +139,5 @@ permitpath:
   - path: /issuer/forgot/emailUsername
     httpMethods: POST
 
-token:
-  audiences: ${OAUTH_CLIENTS}
-  issuerUri: ${ISSUER_URL}
+allowedOrigins: ${ALLOWED_ORIGINS}
+originValue: ${ORIGIN_VALUE}

@@ -43,6 +43,7 @@ dependencies {
     implementation'com.github.ben-manes.caffeine:caffeine:3.1.6'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 tasks.withType(JavaCompile) {
