@@ -27,6 +27,9 @@ public class OriginMdcGlobalFilter implements GlobalFilter {
     @Value("${originValue}")
     private String originValue;
 
+   // @Value("${authorizationServer}")
+    private String authorizationServer;
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         LOG.info("in global filter");
@@ -63,7 +66,11 @@ public class OriginMdcGlobalFilter implements GlobalFilter {
         return chain.filter(exchange1).transform((call) ->call.doFinally(signalType -> {
             LOG.info("response headers: {}", exchange1.getResponse().getHeaders());
             LOG.info("statusCode: {}", exchange1.getResponse().getStatusCode());
+
             if (exchange1.getResponse().getHeaders().getLocation() != null) {
+                LOG.info("host: {}", exchange1.getResponse().getHeaders().getLocation().getHost());
+
+                //if (exchange1.getResponse().getHeaders().getLocation().getHost().equals("https://authorization.sonam.cloud/")
                 final String path = exchange1.getResponse().getHeaders().getLocation().getPath();
                 final String rawPath = exchange1.getResponse().getHeaders().getLocation().getRawPath();
                 String query = exchange1.getResponse().getHeaders().getLocation().getQuery();
