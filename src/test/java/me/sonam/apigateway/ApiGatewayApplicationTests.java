@@ -2,7 +2,6 @@ package me.sonam.apigateway;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +11,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.server.*;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 		properties = {"spring.cloud.discovery.enabled = false"})

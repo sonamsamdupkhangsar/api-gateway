@@ -2,10 +2,20 @@ EUREKA_HOST: localhost:8761
 EUREKA_USER: test
 EUREKA_PASSWORD: test
 
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://authorization-server:9001
+          audiences: oauth-client
 eureka:
   client:
     enabled: true
 
 DEFAULT_ZONE: http://${EUREKA_USER}:${EUREKA_PASSWORD}@${EUREKA_HOST}/eureka
 
-ISSUER_URL: http://authorization-server:9001
+ALLOWED_ORIGINS: api-gateway, *, 127.0.0.1, 10.0.0.28, http://example.com
+ORIGIN_VALUE: http://api-gateway
+ISSUER_URI: http://api-gateway:9001
+AUTHORIZATION_SERVER: api-gateway:9001

@@ -25,7 +25,8 @@ spring:
                     /accounts/emailmysecret/{authenticationId},
                     /accounts/emailactivationlink/{authenticationId},
                     /accounts/authentications/password,
-                    /accounts/activate/{authenticationId}/{secret}
+                    /accounts/activate/{authenticationId}/{secret},
+                    /accounts/{authenticationId}/{email}
         - id: authentication-rest-service
           uri: lb://authentication-rest-service
           predicates:
@@ -42,7 +43,9 @@ spring:
           uri: lb://authorization-server
           predicates:
 #            - Path=/issuer/oauth2/token
-            - Path=/issuer/**
+            - Path=/issuer/forgot/changePassword, /issuer/forgot/emailUsername,
+              /issuer/.well-known/openid-configuration,
+              /issuer/login, /issuer/login?error #/issuer/**,
           #filters:
           #  - RewritePath=/issuer/(?<segment>.*), /$\{segment}
         - id: oauth2-token-mediator
@@ -69,8 +72,12 @@ spring:
                   /roles/clientId/{clientId}/users,
                   /roles/clientId/{clientId}/users/{userId},
                   /roles/{roleId}/users/{userId}
-
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI}
+          audiences: ${OAUTH_AUDIENCES}
 
 logging:
   level:
@@ -82,6 +89,8 @@ logging:
 
 permitpath:
   - path: /
+  - path: /favicon.ico
+    httpMethods: GET
   - path: /actuator/health
   - path: /users
     httpMethods: POST
@@ -121,7 +130,15 @@ permitpath:
     httpMethods: GET
   - path: /oauth2-token-mediator/token
     httpMethods: POST
+  - path: /issuer/login
+    httpMethods: GET, POST
+  - path: /issuer/login?error
+    httpMethods: GET, POST
+  - path: /issuer/forgot/changePassword
+    httpMethods: POST
+  - path: /issuer/forgot/emailUsername
+    httpMethods: POST
 
-token:
-  audiences: ${OAUTH_CLIENTS}
-  issuerUri: ${ISSUER_URL}
+allowedOrigins: ${ALLOWED_ORIGINS}
+originValue: ${ORIGIN_VALUE}
+authorizationServer: ${AUTHORIZATION_SERVER}

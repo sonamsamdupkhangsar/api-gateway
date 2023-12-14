@@ -72,8 +72,13 @@ tolerations: []
 affinity: {}
 
 envs:
-  - name: ISSUER_URL
+  - name: ISSUER_URI
     value: https://authorization.sonam.cloud/issuer
-  - name: OAUTH_CLIENTS
+  - name: OAUTH_AUDIENCES
     value: oauth-client, nextjs-client
-
+  - name: ALLOWED_ORIGINS
+    value: "*, api-gateway.sonam.cloud"
+  - name: ORIGIN_VALUE
+    value: https://api-gateway.sonam.cloud
+  - name: AUTHORIZATION_SERVER  #to skip redirection in api-gateway
+    value: authorization.sonam.cloud
