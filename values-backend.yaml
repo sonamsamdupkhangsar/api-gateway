@@ -82,3 +82,9 @@ envs:
     value: https://api-gateway.sonam.cloud
   - name: AUTHORIZATION_SERVER  #to skip redirection in api-gateway
     value: authorization.sonam.cloud
+
+secretFiles:
+  - file: newrelic-secret
+    keys:
+      - key: newrelic.license_key
+        name: NEW_RELIC_LICENSE_KEY
