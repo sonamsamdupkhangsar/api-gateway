@@ -112,6 +112,7 @@ permitpath:
 #  - path: /accounts/*/*
 #    httpMethods: POST
   - path: /accounts/email/authenticationId/*
+  - path: /accounts/authentications/password
     httpMethods: PUT
   - path: /accounts/validate/secret/*/*
     httpMethods: PUT

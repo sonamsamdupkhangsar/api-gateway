@@ -19,7 +19,7 @@ import java.util.UUID;
 
 import static org.springframework.http.HttpHeaders.ORIGIN;
 
-@Service
+//@Service
 public class OriginMdcGlobalFilter implements GlobalFilter {
     private static final Logger LOG = LoggerFactory.getLogger(OriginMdcGlobalFilter.class);
     private static final String REQUEST_ID = "X-Request-ID";
