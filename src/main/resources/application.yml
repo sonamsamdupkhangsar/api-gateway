@@ -25,7 +25,7 @@ spring:
                     /accounts/emailmysecret/{authenticationId},
                     /accounts/emailactivationlink/{authenticationId},
                     /accounts/authentications/password,
-                    /accounts/activate/{authenticationId}/{secret},
+                    /accounts/{authenticationId}/active/{secret},
                     /accounts/{authenticationId}/{email}
         - id: authentication-rest-service
           uri: lb://authentication-rest-service
@@ -52,7 +52,9 @@ spring:
           uri: lb://oauth2-token-mediator
           predicates:
             - Path=/oauth2-token-mediator/authorize,
-                    /oauth2-token-mediator/token
+                    /oauth2-token-mediator/token,
+              /oauth2-token-mediator/pkce-authorize,
+              /oauth2-token-mediator/public-pkce-token
         - id: organization-rest-service
           uri: lb://organization-rest-service
           predicates:
@@ -116,6 +118,8 @@ permitpath:
     httpMethods: PUT
   - path: /accounts/validate/secret/*/*
     httpMethods: PUT
+  - path: /accounts/*/active/*
+    httpMethods: GET
   - path: /authentications/authenticate
     httpMethods: POST
   - path: /actuator/gateway/routes/account-rest-service
@@ -130,6 +134,10 @@ permitpath:
   - path: /oauth2-token-mediator/authorize
     httpMethods: GET
   - path: /oauth2-token-mediator/token
+    httpMethods: POST
+  - path: /oauth2-token-mediator/pkce-authorize
+    httpMethods: GET
+  - path: /oauth2-token-mediator/public-pkce-token
     httpMethods: POST
   - path: /issuer/login
     httpMethods: GET, POST
