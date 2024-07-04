@@ -4,3 +4,5 @@ This is the api-gateway for the microservices.  This will control the service ro
 ```
 ./gradlew bootRun --args="--spring.profiles.active=local"
 ```
+
+
