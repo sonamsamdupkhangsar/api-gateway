@@ -21,4 +21,5 @@ eureka:
 
 ALLOWED_ORIGINS: api-gateway, *, 127.0.0.1, 10.0.0.28
 ORIGIN_VALUE: http://api-gateway
-AUTHORIZATION_SERVER: api-gateway:9001
+AUTHORIZATION_SERVER: api-gateway
+NEW_RELIC_ENABLED: false
