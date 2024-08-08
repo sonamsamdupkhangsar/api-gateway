@@ -13,7 +13,7 @@ plugins {
 group = 'me.sonam'
 version = '1.0-SNAPSHOT'
 description = 'api-gateway'
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 repositories {
     mavenLocal()
