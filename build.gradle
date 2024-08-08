@@ -46,7 +46,11 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'junit:junit:4.13.2'
 }
-
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
